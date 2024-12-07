@@ -49,7 +49,6 @@ Registers a new user in the system.
           "lastname": "string"
         },
         "email": "string"
-        // ...other user fields...
       }
     }
     ```
@@ -119,6 +118,95 @@ Authenticates a user and returns an authentication token along with user details
     ```json
     {
       "error": "Internal Server Error"
+    }
+    ```
+
+## `/user/logout` Endpoint
+
+### HTTP Method
+`GET`
+
+### Description
+Logs out the authenticated user by invalidating their JWT token.
+
+### Headers
+- `Authorization` (string, required): Bearer token obtained during login.
+
+### Example Request
+
+```json
+{
+  "headers": {
+    "Authorization": "Bearer jwt_token_string"
+  }
+}
+```
+
+### Example Responses
+
+- **200 OK**
+  - **Description**: User logged out successfully.
+  - **Body**:
+    ```json
+    {
+      "message": "Logout successfully"
+    }
+    ```
+- **400 Unauthorized**
+  - **Description**: Invalid token or token already blacklisted.
+  - **Body**:
+    ```json
+    {
+      "error": "Unauthorized"
+    }
+    ```
+
+## `/user/profile` Endpoint
+
+### HTTP Method
+`GET`
+
+### Description
+Fetches the profile of the authenticated user.
+
+### Headers
+- `Authorization` (string, required): Bearer token obtained during login.
+
+### Example Request
+
+```json
+{
+  "headers": {
+    "Authorization": "Bearer jwt_token_string"
+  }
+}
+```
+
+### Example Responses
+
+- **200 OK**
+  - **Description**: User profile fetched successfully.
+  - **Body**:
+    ```json
+    {
+      "user": {
+        "_id": "user_id_string",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+        // ...other user fields...
+      }
+    }
+    ```
+
+- **400 Unauthorized**
+  - **Description**: Invalid token or user not authenticated.
+  - **Body**:
+    ```json
+    {
+      "error": "Unauthorized"
     }
     ```
 ```
