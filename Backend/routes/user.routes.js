@@ -4,7 +4,7 @@ const { body } = require('express-validator')
 // const { route } = require('../app')
 const userController = require('../controllers/user.controller')
 
-// ...existing code...
+
 
 router.post('/register', [
     body('email').isEmail().withMessage('Invalid Email'),
@@ -13,5 +13,10 @@ router.post('/register', [
 ],
     userController.registerUser
 )
-
+    router.post('/login',[
+        body('email').isEmail().withMessage('Invalid Email'),
+        body('password').isLength({ min: 8 }).withMessage('Password must be 8 character long')
+    ],
+    userController.loginUser
+    )
 module.exports = router
