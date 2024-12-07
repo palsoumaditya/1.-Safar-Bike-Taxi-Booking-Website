@@ -1,28 +1,23 @@
-# API Documentation
+#Backend API Documentation
 
-## User Endpoints
+## `/user/register` Endpoint
 
-### POST /user/register
+### HTTP Method
+`POST` 
 
-Register a new user.
+**Description**
 
-#### Request Body
+Registers a new user in the system.
+
+**Request Body**
 
 - `fullname` (object, required)
-  - `firstname` (string, required): First name of the user. Must be at least 3 characters long.
-  - `lastname` (string, optional): Last name of the user.
-- `email` (string, required): Email address of the user. Must be a valid email format.
-- `password` (string, required): Password for the user account. Must be at least 8 characters long.
+  - `firstname` (string, required): User's first name, must be at least 3 characters long.
+  - `lastname` (string, optional): User's last name.
+- `email` (string, required): User's email address, must be a valid email.
+- `password` (string, required): User's password, must be at least 8 characters long.
 
-#### Response
-
-- `201 Created`: User successfully registered.
-  - `token` (string): Authentication token for the user.
-  - `user` (object): User object containing user details.
-- `400 Bad Request`: Validation error.
-  - `errors` (array): Array of validation error messages.
-
-#### Example Request
+**Example Request**
 
 ```json
 {
@@ -31,5 +26,50 @@ Register a new user.
     "lastname": "Doe"
   },
   "email": "john.doe@example.com",
-  "password": "password123"
+  "password": "securepassword"
 }
+```
+
+**Validation Rules**
+
+- `email` must be a valid email address.
+- `fullname.firstname` must be at least 3 characters long.
+- `password` must be at least 8 characters long.
+
+**Example Responses**
+
+- **201 Created**
+  - **Description**: User registered successfully.
+  - **Body**:
+    ```json
+    {
+      "token": "string",
+      "user": {
+        "_id": "string",
+        "fullname": {
+          "firstname": "string",
+          "lastname": "string"
+        },
+        "email": "string"
+        // ...other user fields...
+      }
+    }
+    ```
+- **400 Bad Request**
+  - **Description**: Validation errors or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "string",
+          "param": "string",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+- **500 Internal Server Error**
+  - **Description**: An unexpected error occurred on the server.
+```
+
