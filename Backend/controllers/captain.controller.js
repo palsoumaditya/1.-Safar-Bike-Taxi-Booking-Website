@@ -1,0 +1,1 @@
+const CaptainModel = require('../models/captain.model');
