@@ -1,6 +1,3 @@
-Here is the updated `README.md` file with a table of contents:
-
-```markdown
 # Backend API Documentation
 
 ## Table of Contents
@@ -37,7 +34,7 @@ Registers a new user in the system.
   "email": "john.doe@example.com",
   "password": "securepassword"
 }
-```
+
 
 ### Validation Rules
 - `email` must be a valid email address.
