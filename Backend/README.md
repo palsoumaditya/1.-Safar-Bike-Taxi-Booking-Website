@@ -1,4 +1,3 @@
-
 ```markdown
 # Backend API Documentation
 
@@ -9,6 +8,9 @@
 3. [User Logout](#user-logout-endpoint)
 4. [User Profile](#user-profile-endpoint)
 5. [Captain Registration](#captain-register-endpoint)
+6. [Captain Login](#captain-login-endpoint)
+7. [Captain Logout](#captain-logout-endpoint)
+8. [Captain Profile](#captain-profile-endpoint)
 
 ## `/user/register` Endpoint
 
@@ -320,7 +322,146 @@ Registers a new captain in the system.
       ]
     }
     ```
+
+## `/captain/login` Endpoint
+
+### HTTP Method
+`POST`
+
+### Description
+Authenticates a captain and returns an authentication token along with captain details.
+
+### Request Body
+- `email` (string, required): Captain's email address, must be a valid email.
+- `password` (string, required): Captain's password, must be at least 6 characters long.
+
+### Example Request
+
+```json
+{
+  "email": "captain@example.com",
+  "password": "password123"
+}
 ```
 
+### Validation Rules
+- `email` must be a valid email address.
+- `password` must be at least 6 characters long.
 
+### Example Responses
+
+- **200 OK**
+  - **Description**: Captain authenticated successfully.
+  - **Body**:
+    ```json
+    {
+      "token": "jwt_token_string",
+      "captain": {
+        "_id": "captain_id_string",
+        "fullname": {
+          "firstname": "Captain",
+          "lastname": "Example"
+        },
+        "email": "captain@example.com"
+        // ...other captain fields...
+      }
+    }
+    ```
+
+- **400 Unauthorized**
+  - **Description**: Invalid email or password.
+  - **Body**:
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
+## `/captain/logout` Endpoint
+
+### HTTP Method
+`GET`
+
+### Description
+Logs out the authenticated captain by invalidating their JWT token.
+
+### Headers
+- `Authorization` (string, required): Bearer token obtained during login.
+
+### Example Request
+
+```json
+{
+  "headers": {
+    "Authorization": "Bearer jwt_token_string"
+  }
+}
 ```
+
+### Example Responses
+
+- **200 OK**
+  - **Description**: Captain logged out successfully.
+  - **Body**:
+    ```json
+    {
+      "message": "Logout successfully"
+    }
+    ```
+- **400 Unauthorized**
+  - **Description**: Invalid token or token already blacklisted.
+  - **Body**:
+    ```json
+    {
+      "error": "Unauthorized"
+    }
+    ```
+
+## `/captain/profile` Endpoint
+
+### HTTP Method
+`GET`
+
+### Description
+Fetches the profile of the authenticated captain.
+
+### Headers
+- `Authorization` (string, required): Bearer token obtained during login.
+
+### Example Request
+
+```json
+{
+  "headers": {
+    "Authorization": "Bearer jwt_token_string"
+  }
+}
+```
+
+### Example Responses
+
+- **200 OK**
+  - **Description**: Captain profile fetched successfully.
+  - **Body**:
+    ```json
+    {
+      "captain": {
+        "_id": "captain_id_string",
+        "fullname": {
+          "firstname": "Captain",
+          "lastname": "Example"
+        },
+        "email": "captain@example.com"
+        // ...other captain fields...
+      }
+    }
+    ```
+
+- **400 Unauthorized**
+  - **Description**: Invalid token or captain not authenticated.
+  - **Body**:
+    ```json
+    {
+      "error": "Unauthorized"
+    }
+    ```
