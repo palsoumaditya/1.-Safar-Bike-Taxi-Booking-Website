@@ -8,28 +8,44 @@ const Userlogin = '/login';
 
 const Home = () => {
   return (
-    <div className="relative h-screen w-full">
-      {/* Background Section */}
-      <div
-        className="absolute h-full w-full"
-        style={{
-          backgroundImage: `url(${home})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
+    <div
+      className="relative h-screen w-full bg-cover bg-center"
+      style={{
+        backgroundImage: `url(${home})`,
+        backgroundSize: 'cover', // Ensures the image covers the full page by default
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Overlay Section */}
+      <div className="absolute inset-0 flex flex-col justify-between">
+        {/* Logo Section */}
+        <div className="absolute top-8 left-8">
+          <img className="h-20 w-auto" src={logo} alt="Logo" />
+        </div>
 
-      {/* Logo Section */}
-      <div className="absolute top-8 left-8 z-20 bg-white p-2">
-        <img className="h-15 w-20" src={logo} alt="Logo" />
+        {/* Content Section */}
+        <div className="absolute bottom-0 w-full bg-white bg-opacity-90 py-6 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-5">
+            Meet your favourites ones with Safar
+          </h2>
+          <Link
+            to={Userlogin}
+            className="flex items-center justify-center w-full bg-black text-white py-3 rounded"
+          >
+            Continue
+          </Link>
+        </div>
       </div>
 
-      {/* Content at the bottom */}
-      <div className="absolute bottom-0 left-0 w-full bg-white pb-7 px-4 py-4 z-10">
-        <h2 className="text-3xl font-bold text-center">Meet your favourites ones with Safar</h2>
-        <Link to={Userlogin} className="flex items-center justify-center w-full bg-black text-white py-3 rounded mt-5">Continue</Link>
-      </div>
+      {/* Responsive Styles */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          div[style] {
+            background-size: contain !important; /* Adjust for smaller screens */
+          }
+        }
+      `}</style>
     </div>
   );
 };
