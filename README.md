@@ -1,4 +1,3 @@
-Here's the project overview converted into a `README.md` file format for GitHub:
 
 ```markdown
 # Safar-Bike Taxi Booking Website
